@@ -31,11 +31,11 @@ class Layout {
                       Expanded(
                         child: Text(
                           'Loja - RM',
-                          style: Theme.of(context).textTheme.subhead.copyWith(
-                                color: Layout.light(),
-                                fontSize: 18,
-                                fontStyle: FontStyle.italic,
-                              ),
+                          style: TextStyle(
+                            color: Layout.light(),
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                       Padding(
@@ -50,7 +50,6 @@ class Layout {
                   ),
                 ),
                 Expanded(child: child),
-                Text('Conteudo'),
               ],
             )
           ],
