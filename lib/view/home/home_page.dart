@@ -1,47 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_oculos/view/home/roda_categoria.dart';
-import 'package:loja_virtual_oculos/view/layout.dart';
+
+import './destaques.dart';
+import './promo_banners.dart';
+import './roda_categoria.dart';
+import '../layout.dart';
 
 class HomePage extends StatelessWidget {
-  static String tag = 'home-page';
+  static String tag = '/home-page';
 
   @override
   Widget build(BuildContext context) {
     var content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          height: 100,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Layout.light(),
-            borderRadius: BorderRadius.circular(25),
-          ),
-          child: Text('Promoções'),
-        ),
+        Expanded(flex: 1, child: PromoBanners()),
+        SizedBox(height: 10),
         Expanded(
-          child: Container(
-            height: 100,
-            width: double.infinity,
-            margin: EdgeInsets.only(right: 20, top: 20, left: 20),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Layout.light(0.7),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Text('Promoções'),
-          ),
+          flex: 2,
+          child: HomeDestaques(),
         ),
         SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.only(left: 30),
           child: Text(
             'Categorias',
-            style: TextStyle(
-              color: Layout.light(),
-            ),
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  color: Layout.light(),
+                ),
           ),
         ),
         Container(

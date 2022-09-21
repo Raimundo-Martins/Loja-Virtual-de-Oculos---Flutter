@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_oculos/view/produto/categoria_page.dart';
 
 import 'dart:math';
 
@@ -22,17 +23,6 @@ class _RodaCategoriaState extends State<RodaCategoria>
   SwypeDirection _swypeDirection;
 
   int _currentItem = 0;
-
-  final List<Map<String, dynamic>> itens = const [
-    {"id": '1', "icon": Icons.favorite, "text": 'Estilo'},
-    {"id": '2', "icon": Icons.filter_drama, "text": 'Teen'},
-    {"id": '3', "icon": Icons.flight, "text": 'Viagem'},
-    {"id": '4', "icon": Icons.store_mall_directory, "text": 'Trabalho'},
-    {"id": '5', "icon": Icons.style, "text": 'Casual'},
-    {"id": '6', "icon": Icons.supervised_user_circle, "text": 'Execultivo'},
-    {"id": '7', "icon": Icons.switch_video, "text": 'Esporte'},
-    {"id": '8', "icon": Icons.thumb_up, "text": 'Classico'},
-  ];
 
   @override
   void initState() {
@@ -72,14 +62,14 @@ class _RodaCategoriaState extends State<RodaCategoria>
         RotationTransition(
           turns: Tween(begin: _startDeg, end: _endDeg).animate(_controller),
           child: GestureDetector(
-            /* onTap: () {
-              _controller.reset();
-              _startDeg = _endDeg;
-              _endDeg += (1 / itens.length);
-              setState(() {
-                _controller.forward();
-              });
-            }, */
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CategoriaPage(Layout.categorias[_currentItem]['id']),
+                ),
+              );
+            },
             onHorizontalDragStart: (details) {
               _dragInitial = details.globalPosition.dx;
             },
@@ -96,17 +86,17 @@ class _RodaCategoriaState extends State<RodaCategoria>
 
               switch (_swypeDirection) {
                 case SwypeDirection.left:
-                  _endDeg -= (1 / itens.length);
+                  _endDeg -= (1 / Layout.categorias.length);
                   _currentItem++;
-                  if (_currentItem > itens.length - 1) {
+                  if (_currentItem > Layout.categorias.length - 1) {
                     _currentItem = 0;
                   }
                   break;
                 case SwypeDirection.right:
-                  _endDeg += (1 / itens.length);
+                  _endDeg += (1 / Layout.categorias.length);
                   _currentItem--;
                   if (_currentItem < 0) {
-                    _currentItem = itens.length - 1;
+                    _currentItem = Layout.categorias.length - 1;
                   }
                   break;
                 default:
@@ -136,19 +126,19 @@ class _RodaCategoriaState extends State<RodaCategoria>
   List<Widget> _getCategorias() {
     List<Widget> result = [];
 
-    /* result.add(
+    result.add(
       ClipRRect(
         borderRadius: BorderRadius.circular(
           MediaQuery.of(context).size.width,
         ),
-        child: Image.asset('', fit: BoxFit.cover),
+        child: Image.asset('assets/images/bg-catwheel.png', fit: BoxFit.cover),
       ),
-    ); */
+    );
 
-    var angleFactor = (pi * 2) / itens.length;
+    var angleFactor = (pi * 2) / Layout.categorias.length;
     var angle = -angleFactor;
 
-    for (Map<String, dynamic> item in itens) {
+    for (Map<String, dynamic> item in Layout.categorias) {
       angle += angleFactor;
       result.add(
         Transform.rotate(
@@ -169,7 +159,7 @@ class _RodaCategoriaState extends State<RodaCategoria>
                   '${item['text']}'.toUpperCase(),
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle1
+                      .subtitle2
                       .copyWith(color: Layout.light()),
                 )
               ],
